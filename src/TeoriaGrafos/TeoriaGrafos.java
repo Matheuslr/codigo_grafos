@@ -3,6 +3,7 @@ package TeoriaGrafos;
 import java.io.IOException;
 import java.util.Scanner;
 
+import algoritmos.Busca;
 import algoritmos.Info;
 import util.Grafo;
 import util.Leitor;
@@ -33,6 +34,10 @@ public class TeoriaGrafos {
 			
 			System.out.println("Densidade = " + info.densidade());
 			in.close();
+			
+			Busca busca = new Busca(G);
+			busca.busca_largura(2);
+			
 			
 		} catch (IOException e) {
 			System.out.println("Erro");
