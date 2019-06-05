@@ -12,21 +12,17 @@ import util.Leitor;
 public class TeoriaGrafos {
 
 	public static void main(String[] args) {
-		
+		String [] lista_arquivos = {"rg300_4730","rome99c","facebook_combined","USA-road-dt.DC"};
+		for(int i = 0; i <= 3 ; ++i) {
 		try {
 			System.out.println("Arquivo do grafo");
 			Scanner in = new Scanner(System.in);
-			String nomeArquivo = in.nextLine();
+//			String nomeArquivo = in.nextLine();
+			String nomeArquivo = lista_arquivos[i];
+			System.out.println(lista_arquivos[i]);
 			Leitor leitor = new Leitor();
 			Grafo G;
-			G = leitor.lerArquivo("Datasets/" + nomeArquivo + ".txt");
-			System.out.println(G.listaAdj);
-			for(int i = 0; i < G.V.size(); ++i) {
-				for(int j = 0; j < G.V.size(); ++j) {
-					System.out.print(G.matrizAdj[i][j]);
-				}
-				System.out.println("\n");
-			}
+			G = leitor.lerArquivo("Datasets/" + nomeArquivo + ".txt");	
 //			Info info = new Info(G);
 //			if(info.regular()) {
 //				System.out.println("Regular");
@@ -40,11 +36,11 @@ public class TeoriaGrafos {
 //			}
 
 			CaminhoMinimo caminho = new	CaminhoMinimo();
-			System.out.println("Djikstra : ");
-			caminho.Dijkstra(G, 2);
-			System.out.println("Bellman_Ford");
-			System.out.println(caminho.Bellman_Ford(G, 2));
-			System.out.println("Floyd_Warshall");
+//			System.out.println("Djikstra : ");
+//			caminho.Dijkstra(G, 0);
+//			System.out.println("Bellman_Ford: ");
+//			System.out.println(caminho.Bellman_Ford(G, 0));
+			System.out.println("Floyd_Warshall: ");
 			caminho.Floyd_Warshall(G);
 //			System.out.println("Densidade = " + info.densidade());
 //			in.close();
@@ -59,6 +55,7 @@ public class TeoriaGrafos {
 //			Logger.getLogger(TeoriaGrafos.class.getName());
 		}
 
+	}
 	}
 
 }

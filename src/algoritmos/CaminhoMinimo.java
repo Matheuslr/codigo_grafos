@@ -18,6 +18,7 @@ public class CaminhoMinimo {
 	private int[] caminho;
 	
 	public void Dijkstra(Grafo G, Integer s) {
+		long tempoInicial = System.currentTimeMillis();
 		Integer [] dist;
 		Integer [] pred;
 		//para cada vértice v em V faça:
@@ -46,7 +47,6 @@ public class CaminhoMinimo {
 					u = Q.get(i);
 					min = dist[i];
 
-					
 				}
 			}
 			//Q ← Q – {u}
@@ -62,12 +62,19 @@ public class CaminhoMinimo {
 				}
 			}
 		}
-		for(int i = 0; i < G.V.size(); ++i) {
-			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
-		}
+//		for(int i = 0; i <= G.V.size(); ++i) {
+//			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
+//
+//		}
+		long tempoFinal = System.currentTimeMillis();
+		 System.out.printf("%.3f ms%n", (tempoFinal - tempoInicial) / 1000d);
+		 
+		 System.out.println(retorna_caminho(s, 18, pred));
+		
 	}
 	
 	public boolean Bellman_Ford(Grafo G, Integer s) {
+		long tempoInicial = System.currentTimeMillis();
 		Integer [] dist;
 		Integer [] pred;
 		//para cada vértice v em V faça:
@@ -90,9 +97,13 @@ public class CaminhoMinimo {
 				}
 			}
 		}
-		for(int i = 0; i < G.V.size(); ++i) {
-			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
-		}
+		
+//		for(int i = 0; i <= G.V.size(); ++i) {
+//			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
+//		}
+	    long tempoFinal = System.currentTimeMillis();
+	    System.out.printf("%.3f ms%n", (tempoFinal - tempoInicial) / 1000d);	
+	    System.out.println(retorna_caminho(s, 18, pred));
 		for(int i = 0; i < G.V.size(); ++i) {
 			for(int j = 0; j > G.listaAdj.get(i).size(); ++j) {
 				//se dist[v] > dist[u] + w(u, v) então
@@ -104,32 +115,46 @@ public class CaminhoMinimo {
 		return true;
 	}
 	public void Floyd_Warshall(Grafo G) {
+		long tempoInicial = System.currentTimeMillis();
 		Integer [][] dist;
 		Integer [][] pred;
 		
 		dist = new Integer[G.V.size()][G.V.size()];
 		pred = new Integer[G.V.size()][G.V.size()];
+		//para cada vértice i em V faça
 		for(int i = 0; i < G.V.size(); ++i) {
+			//para cada vértice j em V faça
 			for(int j = 0; j < G.V.size(); ++j) {
-				
+				//sei=jentão
 				if (i == j)
+					//dist [ i ][ j ] ← 0
 					dist[i][j] = 0;
+				//senão se (i, j) ∊ E então
 				else if(G.matrizAdj[i][j] != 0) {
+					//dist [ i ][ j ] ← w[ i ][ j ]
 					dist[i][j] = G.matrizAdj[i][j];
+					//pred [ i ] [ j ] ← i
 					pred[i][j] = i;
 				}
 				else {
+					//dist [ i ][ j ] ← ∞
 					dist[i][j] = infinityInt;
+					//pred [ i ] [ j ] ← null
 					pred[i][j] = null;
 				}
 			}
 		}
+		//para cada vértice k em V faça
 		for(int k = 0 ; k < G.V.size(); ++k) {
+			//para cada vértice i em V faça
 			for(int i = 0 ; i < G.V.size(); ++i) {
+				//para cada vértice j em V faça
 				for(int j = 0 ; j < G.V.size(); ++j) {
-					
+					//se dist [ i ][ j ] > dist [ i ][ k ] + dist [ k ][ j ] então
 					if (dist[i][j] > dist[i][k] + dist[k][j]) {
+						//dist [ i ][ j ] ← dist [ i ][ k ] + dist [ k ][ j ]
 						dist[i][j] = dist[i][k] + dist[k][j];
+						//pred [ i ][ j ] ← pred [ k ][ j ]
 						pred[i][j] = pred[k][j];
 						
 					}
@@ -137,25 +162,37 @@ public class CaminhoMinimo {
 				}
 			}
 		}
-		for(int i = 0; i < G.V.size(); ++i) {
-			System.out.println("\nVertice = " + i);
-			System.out.print("dist = ");
-			for(int j = 0; j < G.V.size(); ++j) {
-				System.out.print(dist[i][j] + "|");	
-			}
-			System.out.print(" pred = ");
-			for(int j = 0; j < G.V.size(); ++j) {
-				System.out.print(pred[i][j] + "|");
-			}
-			
-			System.out.println();
-		}
-//		for(int i = 0; i < G.V.size(); ++i) {
-//			for(int j = 0; j < G.V.size(); ++j) {
-//				System.out.print(pred[i][j]+ "|");
+		long tempoFinal = System.currentTimeMillis();
+		 System.out.printf("%.3f ms%n", (tempoFinal - tempoInicial) / 1000d);
+//		for(int i = 0; i <= G.V.size(); ++i) {
+//			System.out.println("\nVertice = " + i);
+//			System.out.print("dist = ");
+//			for(int j = 0; j <= G.V.size(); ++j) {
+//				System.out.print(dist[i][j] + "|");	
 //			}
-//			System.out.println("\n");
+//			System.out.print(" pred = ");
+//			for(int j = 0; j <= G.V.size(); ++j) {
+//				System.out.print(pred[i][j] + "|");
+//			}
+//			
+//			System.out.println();
 //		}
+		
+		
+	}
+	
+	public ArrayList<Integer> retorna_caminho(Integer s,Integer t, Integer[] pred) {
+		
+		ArrayList <Integer> C = new ArrayList<>();
+		Integer aux = t;
+		
+		while(aux != s) {
+			aux = pred[aux];
+			C.add(0, aux);
+		}
+
+		
+		return C;
 		
 	}
 }
