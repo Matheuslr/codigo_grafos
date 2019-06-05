@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import util.Grafo;
 
 public class Busca {
-
+	
 	private Grafo G;
 
 	public Busca(Grafo g) {

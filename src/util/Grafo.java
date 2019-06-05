@@ -8,8 +8,8 @@ public class Grafo {
     public ArrayList<Aresta> I;
     public int [] [] matrizAdj;
     public ArrayList<ArrayList<Aresta>> listaAdj;
+    
 	public Grafo(ArrayList<Integer> v, ArrayList<Aresta> i, int[][] matrizAdj, ArrayList<ArrayList<Aresta>> listaAdj) {
-		super();
 		V = v;
 		I = i;
 		this.matrizAdj = matrizAdj;
@@ -39,6 +39,5 @@ public class Grafo {
 	public void setListaAdj(ArrayList<ArrayList<Aresta>> listaAdj) {
 		this.listaAdj = listaAdj;
 	}
-    
     
 }
