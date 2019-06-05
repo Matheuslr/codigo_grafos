@@ -21,20 +21,31 @@ public class TeoriaGrafos {
 			Grafo G;
 			G = leitor.lerArquivo("Datasets/" + nomeArquivo + ".txt");
 			System.out.println(G.listaAdj);
-			Info info = new Info(G);
-			if(info.regular()) {
-				System.out.println("Regular");
-			}else {
-				System.out.println("Não regular");
+			for(int i = 0; i < G.V.size(); ++i) {
+				for(int j = 0; j < G.V.size(); ++j) {
+					System.out.print(G.matrizAdj[i][j]);
+				}
+				System.out.println("\n");
 			}
-			if(info.completo()) {
-				System.out.println("Completo");
-			}else {
-				System.out.println("Não Completo");
-			}
+//			Info info = new Info(G);
+//			if(info.regular()) {
+//				System.out.println("Regular");
+//			}else {
+//				System.out.println("Não regular");
+//			}
+//			if(info.completo()) {
+//				System.out.println("Completo");
+//			}else {
+//				System.out.println("Não Completo");
+//			}
 
 			CaminhoMinimo caminho = new	CaminhoMinimo();
-			caminho.Dijkstra(G, 0);
+			System.out.println("Djikstra : ");
+			caminho.Dijkstra(G, 2);
+			System.out.println("Bellman_Ford");
+			System.out.println(caminho.Bellman_Ford(G, 2));
+			System.out.println("Floyd_Warshall");
+			caminho.Floyd_Warshall(G);
 //			System.out.println("Densidade = " + info.densidade());
 //			in.close();
 //			System.out.println("Vertice 1 = " + G.getV());

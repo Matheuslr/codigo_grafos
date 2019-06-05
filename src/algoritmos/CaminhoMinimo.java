@@ -13,18 +13,19 @@ public class CaminhoMinimo {
 	Grafo G;
 	private Integer u;
 	private Integer min;
-	private Integer [] dist;
-	private Integer [] pred;
+	
 	private ArrayList <Integer> Q;
 	private int[] caminho;
 	
 	public void Dijkstra(Grafo G, Integer s) {
+		Integer [] dist;
+		Integer [] pred;
 		//para cada vértice v em V faça:
 		dist = new Integer[G.V.size()];
 		pred = new Integer[G.V.size()];
 		for (Integer i = 0; i < G.V.size(); ++i) {
 			dist[i] = infinityInt;
-			pred[i] = -1;
+			pred[i] = null;
 		}
 		//dist[s] <- 0
 		dist[s] = 0;
@@ -62,9 +63,99 @@ public class CaminhoMinimo {
 			}
 		}
 		for(int i = 0; i < G.V.size(); ++i) {
-			
 			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
 		}
 	}
-
+	
+	public boolean Bellman_Ford(Grafo G, Integer s) {
+		Integer [] dist;
+		Integer [] pred;
+		//para cada vértice v em V faça:
+		dist = new Integer[G.V.size()];
+		pred = new Integer[G.V.size()];
+		for (Integer i = 0; i < G.V.size(); ++i) {
+			dist[i] = infinityInt;
+			pred[i] = null;
+		}
+		//dist[s] <- 0
+		dist[s] = 0;
+		
+		//para cada vértice i em V faça
+		for(int i = 0; i < G.V.size(); ++i) {
+			for(int j = 0; j < G.listaAdj.get(i).size(); ++j) {
+				//se dist[v] > dist[u] + w(u, v) então
+				if(dist[G.listaAdj.get(i).get(j).destino] > dist[G.listaAdj.get(i).get(j).origem] + G.listaAdj.get(i).get(j).peso) {
+					dist[G.listaAdj.get(i).get(j).destino] = dist[G.listaAdj.get(i).get(j).origem] + G.listaAdj.get(i).get(j).peso;
+					pred[G.listaAdj.get(i).get(j).destino] = G.listaAdj.get(i).get(j).origem;
+				}
+			}
+		}
+		for(int i = 0; i < G.V.size(); ++i) {
+			System.out.println("vetor = " + i + " dist = " + dist[i] + " pred = " +pred[i]);
+		}
+		for(int i = 0; i < G.V.size(); ++i) {
+			for(int j = 0; j > G.listaAdj.get(i).size(); ++j) {
+				//se dist[v] > dist[u] + w(u, v) então
+				if(dist[G.listaAdj.get(i).get(j).destino] > dist[G.listaAdj.get(i).get(j).origem] + G.listaAdj.get(i).get(j).peso) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public void Floyd_Warshall(Grafo G) {
+		Integer [][] dist;
+		Integer [][] pred;
+		
+		dist = new Integer[G.V.size()][G.V.size()];
+		pred = new Integer[G.V.size()][G.V.size()];
+		for(int i = 0; i < G.V.size(); ++i) {
+			for(int j = 0; j < G.V.size(); ++j) {
+				
+				if (i == j)
+					dist[i][j] = 0;
+				else if(G.matrizAdj[i][j] != 0) {
+					dist[i][j] = G.matrizAdj[i][j];
+					pred[i][j] = i;
+				}
+				else {
+					dist[i][j] = infinityInt;
+					pred[i][j] = null;
+				}
+			}
+		}
+		for(int k = 0 ; k < G.V.size(); ++k) {
+			for(int i = 0 ; i < G.V.size(); ++i) {
+				for(int j = 0 ; j < G.V.size(); ++j) {
+					
+					if (dist[i][j] > dist[i][k] + dist[k][j]) {
+						dist[i][j] = dist[i][k] + dist[k][j];
+						pred[i][j] = pred[k][j];
+						
+					}
+					
+				}
+			}
+		}
+		for(int i = 0; i < G.V.size(); ++i) {
+			System.out.println("\nVertice = " + i);
+			System.out.print("dist = ");
+			for(int j = 0; j < G.V.size(); ++j) {
+				System.out.print(dist[i][j] + "|");	
+			}
+			System.out.print(" pred = ");
+			for(int j = 0; j < G.V.size(); ++j) {
+				System.out.print(pred[i][j] + "|");
+			}
+			
+			System.out.println();
+		}
+//		for(int i = 0; i < G.V.size(); ++i) {
+//			for(int j = 0; j < G.V.size(); ++j) {
+//				System.out.print(pred[i][j]+ "|");
+//			}
+//			System.out.println("\n");
+//		}
+		
+	}
 }
