@@ -50,12 +50,13 @@ public class CaminhoMinimo {
 			}
 			//Q ← Q – {u}
 			Q.remove(u);
-//			System.out.println(Q);
+			//para cada vértice v adjacente a u faça
 			for(int i = 0; i < G.listaAdj.get(u).size(); ++i) {
-//				System.out.println(G.listaAdj.get(u).get(i));
+				//se dist[v] > dist[u] + w(u, v) então
 				if(dist[G.listaAdj.get(u).get(i).destino] > dist[u] + G.listaAdj.get(u).get(i).peso) {
-					System.out.println("oi");
+					//dist[v] ← dist[u] + w(u, v)
 					dist[G.listaAdj.get(u).get(i).destino] = dist[u] + G.listaAdj.get(u).get(i).peso;
+					//pred[v] ← u
 					pred[G.listaAdj.get(u).get(i).destino] = u;
 				}
 			}
