@@ -12,14 +12,23 @@ import util.Leitor;
 public class TeoriaGrafos {
 
 	public static void main(String[] args) {
-		String [] lista_arquivos = {"rg300_4730","rome99c","facebook_combined","USA-road-dt.DC"};
-		for(int i = 0; i <= 3 ; ++i) {
+		Scanner in = new Scanner(System.in);
+		String escolha_algoritmo;
+//		String [] lista_arquivos = {"rg300_4730","rome99c","facebook_combined","USA-road-dt.DC"};
 		try {
-			System.out.println("Arquivo do grafo");
-			Scanner in = new Scanner(System.in);
-//			String nomeArquivo = in.nextLine();
-			String nomeArquivo = lista_arquivos[i];
-			System.out.println(lista_arquivos[i]);
+			do {
+			System.out.println("Escolha um algoritmo");
+			System.out.println("1 - Dijkstra"
+							 + "\n2 - Bellman Ford"
+							 + "\n3 - Floyd Warshall");
+			escolha_algoritmo = in.nextLine();
+			}while(!escolha_algoritmo.equals("1") && !escolha_algoritmo.equals("2") && !escolha_algoritmo.equals("3"));
+			System.out.println("Digite o nome do arquivo");
+			String nomeArquivo = in.nextLine();
+			System.out.println("Digite o vértice de origem");
+			String origem = in.nextLine();
+			System.out.println("Digite o vértice de destino");
+			String destino = in.nextLine();
 			Leitor leitor = new Leitor();
 			Grafo G;
 			G = leitor.lerArquivo("Datasets/" + nomeArquivo + ".txt");	
@@ -34,14 +43,39 @@ public class TeoriaGrafos {
 //			}else {
 //				System.out.println("Não Completo");
 //			}
-
+			
 			CaminhoMinimo caminho = new	CaminhoMinimo();
-//			System.out.println("Djikstra : ");
-//			caminho.Dijkstra(G, 0);
-//			System.out.println("Bellman_Ford: ");
-//			System.out.println(caminho.Bellman_Ford(G, 0));
-			System.out.println("Floyd_Warshall: ");
-			caminho.Floyd_Warshall(G);
+			
+			switch(Integer.parseInt(escolha_algoritmo)) {
+				case 1:
+					try {
+		
+						caminho.Dijkstra(G,Integer.parseInt(origem), Integer.parseInt(destino));
+					}catch(java.lang.OutOfMemoryError e) {
+						System.out.println("Out of memory");
+						
+					}
+					break;
+					
+				case 2: 
+					try {
+						caminho.Bellman_Ford(G, Integer.parseInt(origem), Integer.parseInt(destino));
+					}catch(java.lang.OutOfMemoryError e) {
+						System.out.println("Out of memory");
+					}
+					break;
+					
+				case 3:
+					try {
+						caminho.Floyd_Warshall(G,Integer.parseInt(origem), Integer.parseInt(destino)) ;
+					}catch(java.lang.OutOfMemoryError e) {
+						System.out.println("Out of memory");
+					}
+					break;
+				default:
+					System.out.println("Erro");
+		}
+	
 //			System.out.println("Densidade = " + info.densidade());
 //			in.close();
 //			System.out.println("Vertice 1 = " + G.getV());
@@ -55,7 +89,6 @@ public class TeoriaGrafos {
 //			Logger.getLogger(TeoriaGrafos.class.getName());
 		}
 
-	}
 	}
 
 }
